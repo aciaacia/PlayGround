@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101619" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>District 17 — Civic Interface</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail" aria-label="Main navigation">
+      <div class="rail-brand"><span class="brand-mark">C</span><span class="brand-caption">CIVIC<br>NETWORK</span></div>
+      <button class="rail-btn selected" data-view="briefing" aria-label="Briefing" title="Briefing"><span>▦</span></button>
+      <button class="rail-btn" data-view="channels" aria-label="Channels" title="Channels"><span>◉</span><i class="rail-dot"></i></button>
+      <button class="rail-btn" data-view="people" aria-label="Residents" title="Residents"><span>♙</span></button>
+      <button class="rail-btn" data-view="policies" aria-label="Directives" title="Directives"><span>⊞</span></button>
+      <div class="rail-spacer"></div>
+      <button class="rail-btn" id="sound-toggle" aria-label="Toggle sound" title="Sound"><span>♫</span></button>
+      <button class="rail-btn" id="reset-game" aria-label="Restart simulation" title="Restart"><span>↻</span></button>
+      <div class="rail-avatar">AD</div>
+    </aside>
+
+    <main class="main-frame">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark">C</span><span>CIVIC NETWORK</span></div>
+        <div class="breadcrumb"><span>TRANSIT DISTRICT</span><b>/</b><strong>ADMINISTRATION</strong></div>
+        <div class="topbar-right"><span class="live-indicator"><i></i> SIMULATION LIVE</span><span class="top-date" id="top-date">DAY 01 · 08:00</span><button class="icon-button" id="help-button" aria-label="How to play">?</button></div>
+      </header>
+
+      <section class="dashboard-head">
+        <div class="title-block"><div class="eyebrow"><span class="eyebrow-line"></span> CIVIC OVERSIGHT / FIELD TERMINAL 04</div><h1>District <em>17</em></h1><p class="subtitle">A city is more than its rules. It is the people trying to live under them.</p></div>
+        <div class="shift-card"><div class="shift-label">CURRENT SHIFT <span class="signal-bars"><i></i><i></i><i></i></span></div><div class="shift-main"><span id="shift-number">01</span><div><strong id="shift-name">Morning watch</strong><small id="shift-date">MONDAY · 17 MAY</small></div></div><div class="shift-progress"><span id="shift-progress"></span></div><div class="shift-foot"><span>MANDATE: KEEP THE DISTRICT FUNCTIONING</span><span id="days-left">07 SHIFTS LEFT</span></div></div>
+      </section>
+
+      <section class="metrics" aria-label="District status">
+        <article class="metric-card metric-order"><div class="metric-top"><span>PUBLIC ORDER</span><span class="metric-icon">◈</span></div><div class="metric-number"><strong id="order-value">68</strong><span>/100</span><b id="order-trend">+0</b></div><div class="meter"><i id="order-meter"></i></div><div class="metric-note" id="order-note">Uneasy, holding</div></article>
+        <article class="metric-card metric-welfare"><div class="metric-top"><span>PUBLIC WELFARE</span><span class="metric-icon">✳</span></div><div class="metric-number"><strong id="welfare-value">54</strong><span>/100</span><b id="welfare-trend">+0</b></div><div class="meter"><i id="welfare-meter"></i></div><div class="metric-note" id="welfare-note">Needs are going unmet</div></article>
+        <article class="metric-card metric-trust"><div class="metric-top"><span>CIVIC TRUST</span><span class="metric-icon">⌁</span></div><div class="metric-number"><strong id="trust-value">42</strong><span>/100</span><b id="trust-trend">+0</b></div><div class="meter"><i id="trust-meter"></i></div><div class="metric-note" id="trust-note">Listening, not convinced</div></article>
+        <article class="metric-card metric-supply"><div class="metric-top"><span>SUPPLY RESERVE</span><span class="metric-icon">▤</span></div><div class="metric-number"><strong id="supply-value">63</strong><span>%</span><b id="supply-trend">+0</b></div><div class="meter"><i id="supply-meter"></i></div><div class="metric-note" id="supply-note">Ration stock: 3 days</div></article>
+      </section>
+
+      <div class="workspace">
+        <section class="comms-panel panel" id="comms-panel">
+          <div class="panel-heading comms-heading"><div><div class="eyebrow">DISTRICT COMMS <span class="online-count"><i></i><span id="online-count">06</span> ACTIVE</span></div><h2>Neighborhood wire</h2></div><button class="tiny-button" id="refresh-feed" title="New messages">↻ <span>REFRESH</span></button></div>
+          <div class="channel-strip" role="tablist" aria-label="Communication channels">
+            <button class="channel-tab active" data-channel="all" role="tab"><span class="hash">#</span> all-district <b id="all-count">8</b></button>
+            <button class="channel-tab" data-channel="shelter" role="tab"><span class="hash">#</span> shelter-12</button>
+            <button class="channel-tab" data-channel="transit" role="tab"><span class="hash">#</span> transit-watch</button>
+            <button class="channel-tab" data-channel="civic" role="tab"><span class="hash">#</span> civic-desk</button>
+          </div>
+          <div class="channel-context"><span class="context-hash">#</span><div><strong id="channel-title">all-district</strong><small id="channel-description">Live messages from across the district</small></div><span class="encrypted-label">● ENCRYPTED</span></div>
+          <div class="message-list" id="message-list" aria-live="polite"></div>
+          <div class="typing-indicator" id="typing-indicator"><span class="typing-dots"><i></i><i></i><i></i></span><span id="typing-text">Residents are checking in…</span></div>
+          <form class="composer" id="composer-form"><span class="composer-plus">＋</span><input id="message-input" maxlength="140" placeholder="Send a district-wide bulletin…" autocomplete="off" aria-label="Write a message"><button type="submit" id="send-message" aria-label="Send message">↑</button></form>
+          <div class="composer-hint"><span>ENTER TO SEND</span><span><i class="lock-icon">▣</i> INTERNAL NETWORK</span></div>
+        </section>
+
+        <aside class="side-column">
+          <section class="panel situation-panel"><div class="panel-heading"><div><div class="eyebrow">FIELD REPORT <span class="report-live">● LIVE</span></div><h2>Situation room</h2></div><span class="panel-index">01</span></div>
+            <div class="incident-card"><div class="incident-art"><div class="sun-haze"></div><div class="tower tower-a"></div><div class="tower tower-b"></div><div class="tower tower-c"></div><div class="walkway"></div><div class="art-label">BLOCK<br>17—B</div><div class="incident-tag"><i></i> DEVELOPING</div></div><div class="incident-body"><div class="incident-kicker"><span>PRIORITY 02</span><span>08:12 LOCAL</span></div><h3 id="incident-title">Water pressure is falling</h3><p id="incident-copy">Shelter 12 reports low pressure across the east stack. Residents are collecting what they can.</p><div class="incident-source"><span class="source-avatar">ML</span><span><strong>Mara Lin</strong><small>BLOCK COORDINATOR · 4 MIN AGO</small></span><button class="text-action" id="source-message">VIEW <span>↗</span></button></div></div></div>
+          </section>
+
+          <section class="panel actions-panel" id="actions-panel"><div class="panel-heading"><div><div class="eyebrow">YOUR AUTHORITY <span class="action-count" id="actions-left">03 AVAILABLE</span></div><h2>Issue a directive</h2></div><span class="panel-index">02</span></div><p class="action-intro">Choose carefully. Every order has a human cost.</p><div class="directive-list" id="directive-list"></div><button class="end-shift-button" id="end-shift"><span class="button-icon">▶</span><span><strong>Close this shift</strong><small>Advance time &amp; hear the district</small></span><b>↗</b></button><div class="docket-footer"><span id="docket-status">3 DIRECTIVES READY</span><span>SHIFT 01 / 07</span></div></section>
+        </aside>
+      </div>
+      <footer class="status-footer"><span>LOCAL CIVIC NETWORK <i>•</i> BUILD 17.04</span><span>“THE CITY IS WHAT WE MAKE OF IT.”</span><span id="footer-clock">08:16:42 <i>•</i> LOCAL</span></footer>
+    </main>
+
+    <div class="toast" id="toast" role="status"></div>
+    <div class="modal-backdrop" id="modal-backdrop" aria-hidden="true"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="modal-close" aria-label="Close">×</button><div class="eyebrow" id="modal-kicker">FIELD TERMINAL GUIDE</div><h2 id="modal-title">The district is listening.</h2><div id="modal-content"></div><button class="modal-primary" id="modal-primary">UNDERSTOOD <span>→</span></button></section></div>
+    <div class="mobile-nav"><button class="mobile-nav-btn active" data-mobile-view="briefing"><span>▦</span>Briefing</button><button class="mobile-nav-btn" data-mobile-view="channels"><span>◉</span>Comms</button><button class="mobile-nav-btn" data-mobile-view="policies"><span>⊞</span>Directives</button></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
